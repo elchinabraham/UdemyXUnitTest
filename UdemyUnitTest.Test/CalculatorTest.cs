@@ -4,19 +4,48 @@ namespace UdemyUnitTest.Test
 {
     public class CalculatorTest
     {
+        public Calculator calculator { get; set; }
+
+        public CalculatorTest()
+        {
+            calculator = new Calculator();
+        }
+
         [Fact]
         public void AddTest()
         {
             // Arrange
             int a = 5, b = 20;
-            var calculator = new Calculator();
 
             // Act
             var total = calculator.Add(a, b);
 
             // Assert
             Assert.Equal(25, total);
-        } 
+        }
+
+        [Theory]
+        [InlineData(5, 20, 25)]
+        [InlineData(15, 20, 35)]
+        [InlineData(3, 2, 5)]
+        [InlineData(1, 7, 8)]
+        public void Add_simpleValues_ReturnTotalValue(int a, int b, int expectedTotal)
+        {
+            var actualTotal = calculator.Add(a, b);
+
+            Assert.Equal(expectedTotal, actualTotal);
+        }
+
+        [Theory]
+        [InlineData(0, 20, 0)]
+        [InlineData(15, 0, 0)]
+        public void Add_zeroValues_ReturnZeroValue(int a, int b, int expectedTotal)
+        {
+            var actualTotal = calculator.Add(a, b);
+
+            Assert.Equal(expectedTotal, actualTotal);
+        }
+
 
         [Fact]
         public void TestContains()
